@@ -18,7 +18,9 @@ Always treat numbers here as **starting points** — tell the user to verify wit
 | Hotend | All-metal, **max 300 °C**, ships with 0.4 mm **brass** nozzle |
 | Extruder | Direct drive, dual-gear → keep retraction short (≈0.5–1.2 mm) |
 | Bed | Max 110 °C, **two heating zones** (inner ~150 W + outer ~100 W); PEI spring-steel sheet |
-| Speed | Marketed 500 mm/s; realistic quality range 150–300 mm/s, limited by hotend flow (run a max volumetric flow test) |
+| Speed | Marketed 500 mm/s; realistic quality range 150–300 mm/s, limited by hotend flow (run a max volumetric flow test). OpenNept4une's config caps at 250 mm/s / 3000 mm/s² by default |
+| Bed zones (OpenNept4une) | `heater_bed` (inner) + `heater_generic heater_bed_outer`. Outer turns on automatically for prints outside X/Y 62.5–172.5 mm or bed ≥ 80 °C |
+| Filament runout sensor | Yes (`filament_sensor`). `M600` = `PAUSE` for filament changes |
 | Klipper features | Pressure advance, input shaping (needs an ADXL345 accelerometer for automatic tuning), bed mesh, KAMP (OpenNept4une) |
 | Upgrades | Elegoo hardened steel nozzle kit (0.4/0.6/0.8) for abrasive filaments; enclosure for ABS/ASA/nylon/PC |
 
@@ -55,7 +57,7 @@ If the user asks Claude to talk to the printer directly (Moonraker HTTP API, see
 - Back up `printer.cfg` before editing it.
 
 ## Sources (compiled Nov 2026)
-OpenNept4une README (github.com/mowtox/OpenNept4une), All3DP N4 Pro profile guide, Siraya Tech N4 filament guide,
+OpenNept4une README (github.com/mowtox/OpenNept4une) and source (github.com/OpenNeptune3D/OpenNept4une, commit 33f6055), All3DP N4 Pro profile guide, Siraya Tech N4 filament guide,
 P3D Neptune tuning guides, 3DJake/retailer spec sheets, Tom's Hardware N4 Pro review, Elegoo wiki filament
 drying guide, Flashforge drying table, Klipper documentation. Values that differed between sources are given as ranges.
 Videos: Factorian Designs "Filament Calibration Masterclass" (gVU5If1VsAM), InitMakes "3D Printing Tricks You SHOULD

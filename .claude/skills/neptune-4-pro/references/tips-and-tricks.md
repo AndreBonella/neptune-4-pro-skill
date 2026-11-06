@@ -35,7 +35,7 @@ Before an 8+ hour print:
 
 ## Using leftover filament
 - Use partial spools for small prints. Don't throw them away.
-- For multi-spool prints, use the **filament runout sensor** (if fitted/enabled in your firmware) to pause automatically. Or insert a pause at a chosen layer in the slicer (Klipper: `PAUSE`, or `M600` if a macro defines it), swap the spool, and `RESUME`. Expect a faint line at the change layer, so do this on parts where looks matter less.
+- For multi-spool prints, the N4 Pro's **filament runout sensor** pauses automatically. On OpenNept4une it also unloads the filament. Or insert a pause at a chosen layer in the slicer (`M600`, which maps to `PAUSE` on OpenNept4une), swap the spool, and `RESUME`. Resume purges 80 mm before continuing. Expect a faint line at the change layer, so do this on parts where looks matter less.
 - **Refill spools** (filament without a spool) are cheaper. Print a reusable spool for them, following the spool maker's design.
 - Empty spools can be reused: print drawer racks, storage, lamps, or wind cables on them.
 

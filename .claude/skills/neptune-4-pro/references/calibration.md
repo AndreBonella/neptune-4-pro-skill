@@ -9,11 +9,10 @@ In other slicers, download an equivalent test model or do the manual version des
 
 1. **Mechanical check.** Check the eccentric nuts on the X carriage and bed wheels: no wobble, but they still roll freely. Tighten the belts evenly. Make sure the gantry is square (both Z sides at the same height).
 2. **PID tuning** (from cold, one at a time):
-   - OpenNept4une: `PID_TUNE_EXTRUDER`, `PID_TUNE_INNER_BED`, `PID_TUNE_OUTER_BED`
-   - Plain Klipper: `PID_CALIBRATE HEATER=extruder TARGET=240`, then `PID_CALIBRATE HEATER=heater_bed TARGET=65` (check `printer.cfg` for the exact heater names on stock firmware, including the outer bed zone)
-   - Then `SAVE_CONFIG`.
-3. **Bed tramming (screws).** `BED_LEVEL_SCREWS_TUNE` (OpenNept4une) or `SCREWS_TILT_CALCULATE` if configured. Repeat until all corners are within ~0.05 mm. Do it with the bed hot (~60 °C).
-4. **Z offset.** Run `CALIBRATE_PROBE_Z_OFFSET` (OpenNept4une) or `PROBE_CALIBRATE` with the paper test → `ACCEPT` → `SAVE_CONFIG`. Fine-tune live during a first-layer print with babystepping (`SET_GCODE_OFFSET Z_ADJUST=±0.01 MOVE=1`). On stock firmware you can also use the touchscreen Z-offset adjust.
+   - OpenNept4une: `PID_Tune_EXTRUDER TEMPERATURE=240`, `PID_Tune_BED TEMPERATURE=65`, `PID_Tune_Outer_BED TEMPERATURE=65`. Each one saves automatically. Tune at the temperature you print at most, since the defaults are 210/60 °C.
+   - Plain Klipper: `PID_CALIBRATE HEATER=extruder TARGET=240`, `PID_CALIBRATE HEATER=heater_bed TARGET=65`, `PID_CALIBRATE HEATER=heater_bed_outer TARGET=65` (OpenNept4une names; check `printer.cfg` on stock firmware). Then `SAVE_CONFIG`.
+3. **Bed tramming (screws).** `Bed_Level_Screws_Tune` (OpenNept4une) or `SCREWS_TILT_CALCULATE` if configured. Repeat until all corners are within ~0.05 mm. Do it with the bed hot (~60 °C).
+4. **Z offset.** Run `Calibrate_Probe_Z_Offset` (OpenNept4une) or `PROBE_CALIBRATE` with the paper test → `ACCEPT` → `SAVE_CONFIG`. Fine-tune live during a first-layer print with babystepping (`SET_GCODE_OFFSET Z_ADJUST=±0.01 MOVE=1`). On stock firmware you can also use the touchscreen Z-offset adjust.
 5. **Bed mesh.** `BED_MESH_CALIBRATE` with the bed at printing temperature, then save. KAMP (OpenNept4une) probes only the print area before each print, which is faster and usually more accurate.
 6. **Axis twist compensation** (if the first layer is uneven left to right despite a good mesh): `AXIS_TWIST_COMPENSATION_CALIBRATE` / `Axis_Twist_Comp_Tune`.
 7. **Input shaping.**
@@ -66,6 +65,7 @@ are next in value. The rest is optional.
 - Pick the **lowest step with no strings or oozing blobs**, and check the seam side too. Shorter is better. Too much retraction can cause small holes in outer walls that look like wet-filament defects, and can jam the extruder.
 - Read the length at the chosen height from the G-code preview, or compute `start + step × (height in mm ÷ step height)`.
 - On direct drive, more than 2 mm is almost never right. Exception: **TPU** stays at 0–0.5 mm (see `filaments.md`).
+- **OpenNept4une + firmware retraction:** if the slicer uses firmware retraction (`G10`/`G11`), the slicer's retraction test changes nothing. Turn firmware retraction off for the test, or run the test with `SET_RETRACTION` changes. Then store the result with `SET_RETRACTION` in the filament start G-code (see `klipper.md`).
 
 ### 5. Max volumetric speed (max flow)
 - Print a max-flow test: a spiral or vase object whose flow (mm³/s) increases with height. Start with the default range; use a lower range for TPU. Don't push high-flow tests too far in one go, because extreme values can clog. Two runs are safer.

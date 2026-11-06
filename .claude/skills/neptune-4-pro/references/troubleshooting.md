@@ -6,6 +6,7 @@ Then check temperature, then calibration (flow → PA → retraction).
 | Symptom | Likely causes | Fixes |
 |---|---|---|
 | Stringing / hairs | Wet filament; too hot; retraction too short; slow travel | Dry the spool; −5 °C; retraction test (0.4–1.5 mm); travel ≥250 mm/s; wipe on retract; PETG: small Z-hop |
+| Stringing that retraction changes don't affect | Firmware retraction is on (`G10`/`G11`), so the slicer's retraction length is ignored; Klipper's default length is 0 | `GET_RETRACTION`; set `SET_RETRACTION RETRACT_LENGTH=...` in filament start G-code, or disable firmware retraction in the slicer (see `klipper.md`) |
 | Blobs / zits on walls | PA wrong; seam settings; wet filament | Calibrate PA; seam "aligned"/"back"; enable scarf seam (Orca); dry the spool |
 | Under-extrusion at speed | Exceeding hotend flow | Run max flow test; set max volumetric speed lower; raise temp 5–10 °C; high-speed filament |
 | Gradually worse under-extrusion | Worn brass nozzle (abrasive filament); partial clog | Replace with hardened nozzle; cold pull |
@@ -13,7 +14,7 @@ Then check temperature, then calibration (flow → PA → retraction).
 | Clog with PLA in enclosure | Heat creep in all-metal hotend | Open the lid/door; check the hotend fan; avoid long idle at temp |
 | First layer not sticking | Dirty PEI; Z too high; bed not meshed | Wash PEI with dish soap; lower Z offset; re-mesh hot; slower first layer (~30–50 mm/s) |
 | First layer rough / ridges | Z too low (over-squish) | Raise Z offset 0.01–0.02 mm at a time |
-| Uneven first layer (one side) | Bed tram; gantry not level; axis twist | `BED_LEVEL_SCREWS_TUNE`; level both Z sides; axis twist compensation |
+| Uneven first layer (one side) | Bed tram; gantry not level; axis twist | `Bed_Level_Screws_Tune`; level both Z sides; axis twist compensation |
 | Warping / corners lifting | Drafts; no enclosure (ABS/ASA); bed too cool; sharp corners | Enclosure; heat both bed zones; brim/mouse ears; draft shield; glue stick |
 | Layer splitting (ABS/ASA/nylon) | Too much cooling; cold ambient | Fan 0–20%; enclosure; +5–10 °C |
 | PETG ripped the PEI | PETG over-bonds to smooth PEI | Glue stick/Windex as release; textured PEI; less squish |
