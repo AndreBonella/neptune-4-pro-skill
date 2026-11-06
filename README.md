@@ -40,6 +40,9 @@ Then ask Claude things like *"PETG settings for my Neptune 4 Pro"*, *"calibrate 
     └── _TEMPLATE.md            record template per filament
 ```
 
+## License
+[MIT](LICENSE)
+
 ## Disclaimer
 Settings are **starting points** compiled from community guides, retailer specs and videos (sources are listed in
 `SKILL.md` and `references/tips-and-tricks.md`). Always calibrate your own spool. Respect the printer's limits
