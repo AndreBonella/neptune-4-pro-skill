@@ -14,6 +14,19 @@ Method background: `calibration.md` section B.
 
 Never fill in a result the user didn't report. If the answer is ambiguous ("between 3 and 4"), take the midpoint, or ask once.
 
+## Automated mode (Claude slices and starts the print)
+When the user wants Claude to run the test on the printer (stock firmware at 192.168.68.3, see `klipper.md`):
+1. **Temperature tower:** run `scripts/make_temp_tower.sh <start> <end> <bed> <scratch_dir>`. It:
+   - takes Orca's own tower model (`resources/calib/temperature_tower/temperature_tower.drc`: 70 blocks × 10 mm, labeled **500 °C at the bottom down to 155 °C**, 5 °C per block), cuts out the requested blocks, and renders `tower_preview.png`. **Read the preview to confirm the labels.**
+   - slices with Orca's stock N4 Pro profiles via the CLI (flattened, marked `system`; all plate temperatures set to the bed temperature, because the CLI defaults to the cool-plate temperature).
+   - inserts `M104` steps at each block, the same rule Orca's calibration uses.
+2. Check the G-code: `M190` = bed temperature, `M109` = start temperature, and the temperature changes listed by the script.
+3. Before printing, confirm with the user: spool loaded and dry, PEI clean and empty, someone near the printer. Then upload (`/server/files/upload`) and start (`/printer/print/start`) once. Don't retry; check `print_stats`.
+4. Watch the print in the background until it leaves `printing`, then ask the user for the result in the card's answer format.
+
+The other tests (flow, PA, retraction, max flow) need Orca's GUI generators, which have no CLI equivalent. The user
+creates them in OrcaSlicer (Calibration menu) and sends them to the printer, or exports the G-code for Claude to upload.
+
 ## Setup common to every test (tell the user once)
 - Dry the spool first. Clean the PEI. Machine calibration (PID, Z offset, mesh) done.
 - Slicer: OrcaSlicer or ElegooSlicer (same Calibration menu). Select the **Neptune 4 Pro printer profile** (G-code flavor Klipper) and the generic preset for the filament type (e.g. Generic PLA), with temperatures set from the spool label.

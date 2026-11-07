@@ -5,6 +5,23 @@
 **Stock Elegoo firmware:** Klipper + Moonraker + Fluidd with Elegoo's touchscreen UI. Easy, and the touchscreen works.
 Elegoo's Klipper is customized. Updating Klipper or Moonraker from the Fluidd update manager can break it, so update only via Elegoo releases unless you know what you're doing.
 
+### Stock firmware facts (verified on the user's N4 Pro, 2026-11-07)
+| Item | Value |
+|---|---|
+| Printer address | **192.168.68.3** (user's LAN), hostname `mkspi` |
+| API access | Moonraker through the Fluidd nginx proxy on **port 80** (`http://192.168.68.3/server/info`). Port 7125 is **not** open |
+| Klipper | `v0.10.0-530-g3387a9c2-dirty` (Elegoo fork) |
+| Heater objects | `extruder`, `heater_bed` (inner), **`heater_generic heater_bed1`** (outer zone) |
+| Filament sensor | `filament_switch_sensor fila` |
+| Limits | `max_velocity` 500, `max_accel` 5000 (Elegoo's pre-print sets 270 mm/s / 4000 mm/s²) |
+| G-code storage | `/home/mks/gcode_files` (Moonraker root `gcodes`) |
+
+**Starting a print via the API on stock firmware:**
+- `POST /printer/print/start?filename=...` returns an **empty body**, but the print does start.
+- Elegoo's Moonraker then runs its own pre-print sequence: metadata, `G28`, `G1 Z100`, `SDCARD_PRINT_FILE`, `BED_MESH_CLEAR`, `BED_MESH_PROFILE load=6`, `SET_VELOCITY_LIMIT velocity=270 accel=4000`, `PRINT_START`, and only then the file.
+- **Don't retry the start.** A second call fails with `!! SD busy`. Check `print_stats.state` (`printing`) and `virtual_sdcard.is_active` instead.
+- Use Orca's stock **Elegoo Neptune 4 Pro** printer profile with stock firmware. Its start G-code heats and purges by itself, and its before-layer-change G-code turns the outer zone off (`M141 S0`) for small, centred, low-temperature prints.
+
 **OpenNept4une** (community, https://github.com/OpenNeptune3D/OpenNept4une, forks e.g. mowtox/OpenNept4une) replaces the Elegoo software with stock open-source Klipper/Moonraker/Fluidd/Mainsail, Crowsnest and KAMP on an Armbian image.
 - Install: flash the eMMC with the release image (needs an MKS EMMC-ADAPTER V2 USB reader or eMMC→microSD adapter; **back up the original eMMC first**), then run `~/OpenNept4une/OpenNept4une.sh` and pick "Install latest OpenNept4une Printer.cfg".
 - The installer asks for **stepper current (0.8 A or 1.2 A)** and **PCB version (V1.0 / V1.1)**. **The wrong current can permanently damage the steppers.** Identify it from the motor label (`BJ42D15-26V77` = 0.8 A, `BJ42D22-53V04` = 1.2 A), from the stock `printer.cfg` `run_current` under stepper_x/stepper_y, or from the build date (N4 Pro before June 2023 = 0.8 A, after = 1.2 A).
@@ -112,7 +129,7 @@ On stock Elegoo firmware the names can differ. Read `printer.cfg` or query Moonr
 | `FIRMWARE_RESTART` | Restart after a config change |
 
 ## Moonraker API (for Claude to query or control the printer)
-Base URL: `http://<printer-ip>:7125` (or port 80 through the web UI proxy).
+Base URL: `http://<printer-ip>:7125`, or port 80 through the web UI proxy. On the user's stock printer, use `http://192.168.68.3` (port 80 only).
 ```bash
 # Status (read-only, safe)
 curl -s "http://$IP:7125/printer/objects/query?extruder&heater_bed&print_stats&toolhead"

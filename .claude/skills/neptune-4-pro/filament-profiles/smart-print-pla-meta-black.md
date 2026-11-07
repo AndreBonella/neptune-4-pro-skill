@@ -7,9 +7,9 @@
 | Color | Black |
 | Spool label range | — (to confirm from the spool label; one retailer lists nozzle 185–215 °C, bed 25–60 °C) |
 | Bought / opened | — |
-| Nozzle used | — |
-| Firmware | — |
-| Slicer + base preset | — |
+| Nozzle used | 0.4 mm brass (stock) |
+| Firmware | Stock Elegoo (Klipper v0.10.0-530) |
+| Slicer + base preset | OrcaSlicer 2.4.2 CLI, "Elegoo PLA @EN4 Series" + "0.20mm Standard @Elegoo N4Pro 0.4 nozzle" |
 | Dried before testing | — |
 
 ## Test results
@@ -40,3 +40,4 @@
 
 ## Observations and history
 - 2026-11-07: Record created; calibration started.
+- 2026-11-07: Test 1 temperature tower printing (225→185 °C, 9 blocks, bed 60 °C, fan 100%, 5 mm brim, ~57 min). File `TempTower_SmartPrint_PLAMeta_225-185.gcode` started via Moonraker.

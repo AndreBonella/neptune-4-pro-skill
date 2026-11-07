@@ -20,6 +20,7 @@ Always treat numbers here as **starting points** — tell the user to verify wit
 | Bed | Max 110 °C, **two heating zones** (inner ~150 W + outer ~100 W); PEI spring-steel sheet |
 | Speed | Marketed 500 mm/s; realistic quality range 150–300 mm/s, limited by hotend flow (run a max volumetric flow test). OpenNept4une's config caps at 250 mm/s / 3000 mm/s² by default |
 | Bed zones (OpenNept4une) | `heater_bed` (inner) + `heater_generic heater_bed_outer`. Outer turns on automatically for prints outside X/Y 62.5–172.5 mm or bed ≥ 80 °C |
+| User's printer | **Stock Elegoo firmware**, stock 0.4 mm brass nozzle, at **192.168.68.3** (Moonraker via port 80; 7125 closed). Outer bed = `heater_generic heater_bed1`. Details in `references/klipper.md` |
 | Filament runout sensor | Yes (`filament_sensor`). `M600` = `PAUSE` for filament changes |
 | Klipper features | Pressure advance, input shaping (needs an ADXL345 accelerometer for automatic tuning), bed mesh, KAMP (OpenNept4une) |
 | Upgrades | Elegoo hardened steel nozzle kit (0.4/0.6/0.8) for abrasive filaments; enclosure for ABS/ASA/nylon/PC |
