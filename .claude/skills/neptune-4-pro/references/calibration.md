@@ -22,6 +22,9 @@ In other slicers, download an equivalent test model or do the manual version des
 
 ## B. Per-filament calibration
 
+> For a step-by-step guided session (one labeled test print at a time; the user reports the best sample), use
+> `calibration-procedure.md`. This section explains the method behind each test.
+
 Redo for every new filament **brand or type**, and after a nozzle change. Colors of the same brand are often
 similar but not always, so a quick temperature and flow check is worth it.
 

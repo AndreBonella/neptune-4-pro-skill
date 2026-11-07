@@ -34,7 +34,7 @@ Hard limits to enforce in every recommendation:
 1. **Identify the setup** if it matters to the answer: stock Elegoo firmware vs OpenNept4une; slicer (OrcaSlicer, ElegooSlicer, Cura, PrusaSlicer); nozzle size/material; enclosure or not.
 2. **Identify the filament** (type + brand if known). **First check `filament-profiles/`** for a calibrated record of that filament. Measured values there override generic ranges. Otherwise use its section in `references/filaments.md`, and prefer the manufacturer's printed range on the spool label when the user has it.
 3. **Give settings** as a compact table: nozzle temp, bed temp, fan, speed / max volumetric flow, retraction, bed prep, drying, special notes.
-4. **For a new (uncalibrated) filament**, offer the per-filament test sequence from `references/calibration.md` section B (order: temperature → flow ratio → pressure advance → retraction → max flow, then verify). Create a record from `filament-profiles/_TEMPLATE.md`.
+4. **For a new (uncalibrated) filament, or "calibrate <filament>"**, run the guided procedure in `references/calibration-procedure.md`: one labeled test print at a time (temperature → flow ratio → pressure advance → retraction → max flow → verify). The user picks the best sample, and Claude converts it to the setting. Create a record from `filament-profiles/_TEMPLATE.md`.
 5. **When the user reports test results**, write them into that filament's record and update the index in `filament-profiles/README.md`. Fill in only what was measured; never invent results.
 6. **For defects**, use `references/troubleshooting.md`. Ask for or infer the symptom, and check wet filament first for stringing, popping or rough surfaces.
 7. **For firmware/macros/printer control**, use `references/klipper.md`.
@@ -44,6 +44,7 @@ Hard limits to enforce in every recommendation:
 
 - `references/filaments.md` — per-filament settings and tips/tricks (PLA family, PETG, TPU, ABS, ASA, nylon, PC, CF/GF, specialty), plus drying and storage table.
 - `references/calibration.md` — machine calibration (Klipper commands) and slicer-independent per-filament tests.
+- `references/calibration-procedure.md` — guided "print labeled samples → user picks the best" session, with a card per test and conversion formulas.
 - `references/tips-and-tricks.md` — orientation, supports, brim, infill, modifiers, pre-flight checklist, tools, post-processing.
 - `filament-profiles/` — the user's calibrated per-filament records (`README.md` index + `_TEMPLATE.md`).
 - `references/klipper.md` — stock vs OpenNept4une, macros, start/end G-code, Moonraker API, segmented bed.
