@@ -9,4 +9,4 @@ Test order and methods: `references/calibration.md` section B.
 
 | File | Filament | Nozzle | Temp | Flow | PA | Max flow | Last tested |
 |---|---|---|---|---|---|---|---|
-| [smart-print-pla-meta-black.md](smart-print-pla-meta-black.md) | Smart Print PLA Meta, black | — | — | — | — | — | in progress (started 2026-11-07) |
+| [smart-print-pla-meta-black.md](smart-print-pla-meta-black.md) | Smart Print PLA Meta, black | 0.4 brass | 205 °C | — | — | — | in progress: Test 1 done 2026-11-07 |

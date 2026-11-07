@@ -20,6 +20,7 @@ Elegoo's Klipper is customized. Updating Klipper or Moonraker from the Fluidd up
 - `POST /printer/print/start?filename=...` returns an **empty body**, but the print does start.
 - Elegoo's Moonraker then runs its own pre-print sequence: metadata, `G28`, `G1 Z100`, `SDCARD_PRINT_FILE`, `BED_MESH_CLEAR`, `BED_MESH_PROFILE load=6`, `SET_VELOCITY_LIMIT velocity=270 accel=4000`, `PRINT_START`, and only then the file.
 - **Don't retry the start.** A second call fails with `!! SD busy`. Check `print_stats.state` (`printing`) and `virtual_sdcard.is_active` instead.
+- **Finished prints show as "cancelled".** The stock end sequence turns off both beds and then runs `CANCEL_PRINT` + `SDCARD_RESET_FILE`, so `print_stats` drops from `printing` (around 93 % display progress) straight to `standby`, and `/server/history` records `cancelled`. Ask the user whether it finished; don't report a failure from this alone.
 - Use Orca's stock **Elegoo Neptune 4 Pro** printer profile with stock firmware. Its start G-code heats and purges by itself, and its before-layer-change G-code turns the outer zone off (`M141 S0`) for small, centred, low-temperature prints.
 
 **OpenNept4une** (community, https://github.com/OpenNeptune3D/OpenNept4une, forks e.g. mowtox/OpenNept4une) replaces the Elegoo software with stock open-source Klipper/Moonraker/Fluidd/Mainsail, Crowsnest and KAMP on an Armbian image.
