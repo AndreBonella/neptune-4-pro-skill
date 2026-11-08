@@ -37,7 +37,7 @@ Hard limits to enforce in every recommendation:
 4. **For a new (uncalibrated) filament**, offer the per-filament test sequence from `references/calibration.md` section B (order: temperature → flow ratio → pressure advance → retraction → max flow, then verify). Create a record from `filament-profiles/_TEMPLATE.md`.
 5. **When the user reports test results**, write them into that filament's record and update the index in `filament-profiles/README.md`. Fill in only what was measured; never invent results.
 6. **For defects**, use `references/troubleshooting.md`. Ask for or infer the symptom, and check wet filament first for stringing, popping or rough surfaces.
-7. **For firmware/macros/printer control**, use `references/klipper.md`.
+7. **For firmware/macros/printer control**, use `references/klipper.md`. To operate the printer directly or debug an MCU shutdown, use the `neptune-4-pro-remote` skill.
 8. **For general slicing/workflow advice** (orientation, supports, brim, infill, modifiers, long-print checklist, tools), use `references/tips-and-tricks.md`.
 
 ## Reference files
@@ -55,6 +55,9 @@ If the user asks Claude to talk to the printer directly (Moonraker HTTP API, see
 - Read-only queries (status, temperatures, file list) are fine.
 - **Ask for confirmation before** heating, homing/moving, starting/cancelling prints, `SAVE_CONFIG`, firmware restarts, or editing `printer.cfg`. Someone may not be next to the printer.
 - Back up `printer.cfg` before editing it.
+
+For hands-on operation (verified uploads, watching a print, babystepping, config edits over Moonraker) and for
+diagnosing MCU shutdowns from `klippy.log`, use the companion skill `neptune-4-pro-remote`.
 
 ## Sources (compiled Nov 2026)
 OpenNept4une README (github.com/mowtox/OpenNept4une) and source (github.com/OpenNeptune3D/OpenNept4une, commit 33f6055), All3DP N4 Pro profile guide, Siraya Tech N4 filament guide,

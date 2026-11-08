@@ -26,6 +26,10 @@ Then check temperature, then calibration (flow → PA → retraction).
 | Popping / steam / bubbles | Wet filament | Dry (see `filaments.md` table) |
 | TPU jams in extruder | Too fast; retraction too long | ≤3–5 mm³/s; retraction 0–0.5 mm; dry; lower PA |
 | Klipper "MCU shutdown" / heater errors | Loose thermistor/heater wires; PID untuned; failing part | Re-run PID; check connectors at hotend and bed; inspect wiring at the strain relief |
+| "Timer too close" right at the KAMP purge line | Klipper stalled walking huge exclude-object outlines (full plates of detailed models) | Shrink the outlines before uploading (`neptune-4-pro-remote` skill, `scripts/shrink_polygons.py`) |
+| "Missed scheduling of next digital out event" / "Timeout with MCU" mid-print, after a `FIRMWARE_RESTART` | OpenNept4une v0.1.7 `affinity.service` leaves the ttyS0 IRQ thread below Klipper after the restart (OpenNept4une#445) | See `neptune-4-pro-remote` → `references/mcu-shutdowns.md` (remove the affinity service, or re-apply the priority) |
+| "Lost communication with MCU" after hours, at random | UART TX DMA kernel bug (OpenNept4une#444) | Device-tree workaround in that issue; see `mcu-shutdowns.md` |
+| Printer powers itself off (no web UI, no SSH) | Power-loss monitor reacting to a voltage sag | `journalctl -b -1` after reboot; see `mcu-shutdowns.md` |
 | Broke after Fluidd update (stock FW) | Elegoo's custom Klipper overwritten | Restore via Elegoo firmware image, or move to OpenNept4une |
 
 ## Cold pull (clearing a partial clog)
