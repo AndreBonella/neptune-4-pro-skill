@@ -15,7 +15,7 @@ Method background: `calibration.md` section B.
 Never fill in a result the user didn't report. If the answer is ambiguous ("between 3 and 4"), take the midpoint, or ask once.
 
 ## Automated mode (Claude slices and starts the print)
-When the user wants Claude to run the test on the printer (stock firmware at 192.168.68.3, see `klipper.md`):
+When the user wants Claude to run the test on the printer (stock firmware; find its current IP with "Finding the printer" in `klipper.md`):
 1. **Temperature tower:** run `scripts/make_temp_tower.sh <start> <end> <bed> <scratch_dir>`. It:
    - takes Orca's own tower model (`resources/calib/temperature_tower/temperature_tower.drc`: 70 blocks × 10 mm, labeled **500 °C at the bottom down to 155 °C**, 5 °C per block), cuts out the requested blocks, and renders `tower_preview.png`. **Read the preview to confirm the labels.**
    - slices with Orca's stock N4 Pro profiles via the CLI (flattened, marked `system`; all plate temperatures set to the bed temperature, because the CLI defaults to the cool-plate temperature).

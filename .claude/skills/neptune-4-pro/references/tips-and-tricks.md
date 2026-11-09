@@ -24,6 +24,14 @@ Where a tip from a video conflicted with the earlier researched guidance, the re
 - Slicers (Orca, Bambu Studio, PrusaSlicer, Cura's "per-model settings") let you add a **modifier volume**: a cylinder or box placed in the model with its own settings (higher infill, more walls, ironing, different speed). Use it to reinforce screw bosses or stress points without slowing down the whole print.
 - **Negative parts** cut geometry out in the slicer, e.g. a quick screw hole, so you don't need to go back to CAD.
 
+## Clearances for parts that fit together
+- The printed size of holes, slots and grooves comes out a little smaller than designed (squish of the first layers, wall line width, elephant's foot). **Design the clearance in**: don't rely on XY compensation alone.
+- **Measured on this printer** (0.4 brass nozzle, 0.2 mm layers, stock flow): a sliding dovetail at **0.25 mm per side was a little tight** in Smart Print PLA Meta (2026-11-07). **0.4 mm per side was then confirmed** for sliding fits (a box telescope and a dovetail rail), and 0.25 mm per side for a screwed fixed fit (fit coupons, 2026-11-07). Start there, and check the filament's record in `filament-profiles/` (row "Tolerance / XY compensation").
+- **Long sliding parts** (telescopes, rails over ~100 mm) bind more than short ones: a slight bow, bridge sag on the inside ceiling, or elephant's foot all eat the gap. Use at least the same per-side clearance, and **chamfer the sliding part's bottom edges by ~0.5 mm** so a squashed first layer can't widen them.
+- Screwed (fixed) fits can be snugger than sliding ones, but not below ~0.25 mm per side: at 0.15 mm the part may not go in at all.
+- A fit that's locked by a screw or clamp may be a bit loose; a press fit may not. Print a short test piece of the joint before printing the whole set: slices cut from the real parts (same orientation, 2 walls, 10 % infill) check every fit in about an hour instead of a full plate.
+- Each filament shrinks differently (PETG and ASA differ from PLA), so check a fit again when you change material.
+
 ## Pre-flight checklist for long prints
 Before an 8+ hour print:
 1. Calibration is recent (Z offset, bed mesh/KAMP, the filament has a record in `filament-profiles/`).

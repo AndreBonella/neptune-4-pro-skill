@@ -8,8 +8,8 @@ Elegoo's Klipper is customized. Updating Klipper or Moonraker from the Fluidd up
 ### Stock firmware facts (verified on the user's N4 Pro, 2026-11-07)
 | Item | Value |
 |---|---|
-| Printer address | **192.168.68.3** (user's LAN), hostname `mkspi` |
-| API access | Moonraker through the Fluidd nginx proxy on **port 80** (`http://192.168.68.3/server/info`). Port 7125 is **not** open |
+| Printer address | **Changes over time (DHCP).** Hostname `mkspi`. See "Finding the printer" below |
+| API access | Moonraker through the Fluidd nginx proxy on **port 80** (`http://$IP/server/info`). Port 7125 is **not** open |
 | Klipper | `v0.10.0-530-g3387a9c2-dirty` (Elegoo fork) |
 | Heater objects | `extruder`, `heater_bed` (inner), **`heater_generic heater_bed1`** (outer zone) |
 | Filament sensor | `filament_switch_sensor fila` |
@@ -129,8 +129,25 @@ On stock Elegoo firmware the names can differ. Read `printer.cfg` or query Moonr
 | `SAVE_CONFIG` | Persist calibration results (restarts Klipper) |
 | `FIRMWARE_RESTART` | Restart after a config change |
 
+## Finding the printer
+The printer's IP changes from time to time, so never assume an address. Find and confirm it before any API call. It has moved from 192.168.68.3 to 192.168.68.4 (seen 2026-11-09); these are hints only.
+
+1. Try the last address seen, and confirm it is the printer (a read-only request):
+   ```bash
+   IP=192.168.68.4; curl -s -m 3 "http://$IP/printer/info" | grep -q '"hostname": *"mkspi"' && echo "printer at $IP"
+   ```
+2. If that fails, search the local network with the same read-only check:
+   ```bash
+   SUBNET=$(ip -4 route | awk '/proto kernel/ && !/linkdown/ {print $1; exit}')
+   python3 -c 'import ipaddress,sys; print(*ipaddress.ip_network(sys.argv[1]).hosts(), sep="\n")' "$SUBNET" |
+     xargs -P 64 -I{} sh -c 'curl -s -m 2 "http://{}/printer/info" | grep -q "\"hostname\": *\"mkspi\"" && echo {}'
+   ```
+3. If the search finds nothing or a permission check blocks it, don't work around the block. Ask the user for the IP, which is on the touchscreen's network settings or the router's device list.
+
+A failed connection to an old address doesn't mean the printer is off or disconnected. After moving to OpenNept4une, the hostname may differ, so match on `/server/info` containing `klippy_state` and also try port 7125.
+
 ## Moonraker API (for Claude to query or control the printer)
-Base URL: `http://<printer-ip>:7125`, or port 80 through the web UI proxy. On the user's stock printer, use `http://192.168.68.3` (port 80 only).
+Base URL: `http://<printer-ip>:7125`, or port 80 through the web UI proxy. On the user's stock printer, use `http://$IP` (port 80 only), with `$IP` from "Finding the printer" above.
 ```bash
 # Status (read-only, safe)
 curl -s "http://$IP:7125/printer/objects/query?extruder&heater_bed&print_stats&toolhead"

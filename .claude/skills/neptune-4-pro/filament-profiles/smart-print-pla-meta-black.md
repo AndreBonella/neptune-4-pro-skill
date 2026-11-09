@@ -26,7 +26,7 @@
 | 8 | Enclosure needed | — | no (lid/door open) | PLA |
 | opt | Adaptive PA sets (PA, flow, accel) | — | — | Klipper only |
 | opt | VFA speeds to avoid | — | — | |
-| opt | Tolerance / XY compensation | — | — | |
+| opt | Tolerance / XY compensation | 2026-11-07 | sliding fits: 0.25 mm/side a little tight → **0.4 mm/side OK** (box telescope + dovetail rail coupons); screwed fixed fit **0.25 mm/side OK** | no XY compensation; 0.4 nozzle, 0.2 mm layers, 5 walls; male printed on its back, female on its front face (see Observations) |
 | ✔ | Verification cube | — | — | |
 
 ## Final settings (copy into the slicer filament profile)
@@ -42,3 +42,5 @@
 - 2026-11-07: Record created; calibration started.
 - 2026-11-07: Test 1 temperature tower printing (225→185 °C, 9 blocks, bed 60 °C, fan 100%, 5 mm brim, ~57 min). File `TempTower_SmartPrint_PLAMeta_225-185.gcode` started via Moonraker.
 - 2026-11-07: Tower finished (~59 min; stock firmware logged the job as "cancelled" at 93 % although it completed). Per-feature picks: stringing 205, overhangs 200, bridge 210, fine detail 205, walls 205 → **205 °C** (3 of 5 criteria, the others bracket it).
+- 2026-11-07: **Fit test, sliding dovetail** (archery camera case in a riser adapter, both in this filament at 205 °C, 0.2 mm layers, no XY compensation). The dovetail flanks and bottom had 0.25 mm clearance per side (16/22 mm wide, 4 mm deep, 31 mm engaged). The user found it **a little too tight**. The design was changed to 0.4 mm per side (the same for the bar's rail dovetail) and the riser reprinted. Record here whether 0.4 fits.
+- 2026-11-07: **Fit coupons confirmed the tolerances** (short slices of the camera bar, 2 walls, 10 % infill, 0.2 mm, printed on their bottoms like the real parts). A box-section telescope at 0.4 mm per side and on top (0.5 mm chamfer on the sliding part's bottom edges) slides well. A dovetail rail at 0.4 mm per side slides well. A pocket for a screwed-in bar at 0.25 mm per side fits. The user said "it all checks out". Use these as the starting clearances for this filament.
